@@ -58,7 +58,7 @@ class Product
         }
 	   if(empty($this->request->getControllerName())){
 	   $custd=$this->checkoutsession->getQuote()->getData();
-       if(empty($factuuradresnummer))$factuuradresnummer=$custd['customer_besteladresnummer'];
+       if(empty($factuuradresnummer))$factuuradresnummer=@$custd['customer_besteladresnummer'];
 
 		 
 	   }

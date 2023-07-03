@@ -3,4 +3,7 @@
 	<event name="customer_customer_authenticated">
 		<observer name="mapeco_sale_observer_frontend_customer_customerauthenticated_customer_customer_authenticated" instance="Mapeco\Sale\Observer\Frontend\Customer\CustomerAuthenticated"/>
 	</event>
+	<!--<event name="customer_register_success">
+		<observer name="mapeco_sale_observer_customer_registersuccess_customer_register_success" instance="Mapeco\Sale\Observer\Customer\RegisterSuccess"/>
+	</event>-->
 </config>
