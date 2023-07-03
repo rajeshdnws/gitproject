@@ -1,0 +1,93 @@
+<style>
+.orderLink{
+	color: blue;
+    text-decoration: underline;
+}
+table.dataTable thead th, table.dataTable tfoot th {
+    font-weight: bold;
+    font-size: 11px;
+}
+table.dataTable thead>tr>th.sorting, table.dataTable thead>tr>th.sorting_asc, table.dataTable thead>tr>th.sorting_desc, table.dataTable thead>tr>th.sorting_asc_disabled, table.dataTable thead>tr>th.sorting_desc_disabled, table.dataTable thead>tr>td.sorting, table.dataTable thead>tr>td.sorting_asc, table.dataTable thead>tr>td.sorting_desc, table.dataTable thead>tr>td.sorting_asc_disabled, table.dataTable thead>tr>td.sorting_desc_disabled {
+     padding-right: 10px!important;
+}
+</style>
+<?php  $erpOrders=$block->getErpOrderline(); 
+
+		$objectManager = \Magento\Framework\App\ObjectManager::getInstance(); // Instance of object manager
+		use Magento\Framework\Exception\NoSuchEntityException;
+      $product = $objectManager->get('Magento\Catalog\Api\ProductRepositoryInterface');
+
+		
+		//$result = $connection->fetchRow($sql); // gives associated array, table fields as key in array.
+
+?>
+	<table id="erpordersline" class="display" style="width:100%">
+		<thead>
+			<tr>
+				<th><?php echo __('Order Nummer')?></th>  
+				<th><?php echo __('Datum')?></th>
+				<th><?php echo __('Artikelcode')?></th>
+				 <th><?php echo __('Artikelomschrijving')?></th>
+				<th><?php echo __('Netto ehprijs excl BTW')?></th>
+				 <th><?php echo __('Lijntotaal excl BTW')?></th>
+				<th><?php echo __('Aantal besteld')?></th>
+				<th><?php echo __('Aantal geleverd')?></th>
+				<th><?php echo __('Aantal in BO')?></th>
+				<th><?php echo __('Aantal gefactureerd')?></th>
+				<th><?php echo __('Status')?></th>
+
+
+			</tr>
+		</thead>
+		<tbody>
+          <?php if(!empty($erpOrders['orders'])){ foreach($erpOrders['orders'] as $order){			  
+			  foreach($order['orderlijnen'] as $orderItem){ ?>
+			<tr>
+				<td>#<?php echo $order['ordernummer']; ?></td>
+				<td><?php $orderDate=$order['datum_ingave']; echo date("Y-m-d",strtotime($orderDate)); ?></td>
+				
+            <?php  		
+
+				 try {
+				$productUrl = $product->get($orderItem['artikelcode'])->getProductUrl();
+			} catch (NoSuchEntityException $noSuchEntityException) {
+				$productUrl = null;
+        }
+			
+			?>
+				<td>
+				<?php if(!empty($productUrl)){?>				
+				<a href="<?php echo $productUrl;?>"><?php echo $orderItem['artikelcode'];?></a>
+			  <?php } else{
+				  echo $orderItem['artikelcode'];
+				  
+			  } ?>
+				</td>
+				<td><?php echo $orderItem['artikelomschrijving'];?></td>
+                <td>€ &nbsp;<?php echo number_format($orderItem['netto_ehprijs_excl_BTW'],2);?></td>
+				<td>€ &nbsp;<?php echo number_format($orderItem['netto_bedrag_orderlijn'],2);?></td>
+				<td><?php echo $orderItem['aantal_besteld'];?></td>
+				<td><?php echo $orderItem['aantal_geleverd'];?></td>
+				<td><?php echo $orderItem['totaal_in_bo'];?></td>
+				<td><?php echo $orderItem['aantal_gefactureerd'];?></td>
+				<td><?php if($orderItem['orderlijnstatus']==6)
+				{ $st='Geleverd';}
+			    elseif($orderItem['orderlijnstatus']==8)
+				{ $st='Geleverd/Gefactureerd';}
+				else{ $st='BO';}				      
+				
+				echo $st;?></td>
+
+
+			</tr> 
+		  <?php } }
+			   }?>
+				</tbody>
+	</table>
+	<script type="text/javascript">
+require(['jquery', 'jquery/ui','dataTableJs','momentJs','dateTimeJs'], function($){ 
+   $(document).ready(function($){
+        $('#erpordersline').DataTable();
+    });
+  });
+</script>

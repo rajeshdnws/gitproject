@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<type name="Magento\Catalog\Model\Product">
+		<plugin name="Mapeco_Sale_Plugin_Frontend_Magento_Catalog_Model_Product" type="Mapeco\Sale\Plugin\Frontend\Magento\Catalog\Model\Product" sortOrder="1" disabled="false"/>
+	</type>
+	
+	<preference for="Magento\Catalog\Pricing\Price\SpecialPrice" type="Mapeco\Sale\Model\Rewrite\SpecialPrice" />
+	<type name="Magento\Framework\App\Action\AbstractAction">
+    	<plugin name="customer-session-data-to-context" type="Mapeco\Sale\Plugin\CustomerSessionContext" sortOrder="1" disabled="false"/>
+	</type>
+ <virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid" type="Magento\Sales\Model\ResourceModel\Grid">
+<arguments>
+<argument name="columns" xsi:type="array">
+<item name="erp_order_id" xsi:type="string">sales_order.erp_order_id</item>
+</argument>
+</arguments>
+</virtualType><!--
+ <type name="Magento\Checkout\Api\PaymentInformationManagementInterface">
+        <plugin name="mapeco_opc_additional_data" type="Mapeco\Sale\Plugin\Checkout\Model\CustomerAdditionalData" sortOrder="2" />
+    </type>-->	
+	
+ <type name="Magento\OfflineShipping\Model\Carrier\Tablerate">
+        <plugin name="mapeco_individual_product_shipping_price"
+                type="Mapeco\Sale\Plugin\ChangeShippingMethodPrice"
+                sortOrder="10"
+                disabled="false"/>
+    </type>
+
+</config>

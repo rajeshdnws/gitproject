@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	<table name="sales_order">
+		<column name="erp_order_num" nullable="true" xsi:type="varchar" comment="erp order  Number" length="100"/>
+	</table>
+	<table name="sales_order_grid">
+		<column name="erp_order_num" nullable="true" xsi:type="varchar" comment="erp order  Number" length="100"/>
+	</table>
+</schema>

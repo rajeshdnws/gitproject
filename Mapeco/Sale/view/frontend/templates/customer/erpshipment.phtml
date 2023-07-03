@@ -1,0 +1,56 @@
+<h1>Alle Zendnotas</h1>
+<?php
+	if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on'){
+		$url = "https://";
+	}else{
+		$url = "http://";
+	}
+    $url.= $_SERVER['HTTP_HOST']; 
+    $url.= $_SERVER['REQUEST_URI'];
+	$urlExplode = explode("/",$url);
+?>
+
+<style>
+.orderLink{
+	color: blue;
+    text-decoration: underline;
+}
+</style>
+
+<?php  $erpShipment=$block->getErpShipment(); ?>
+
+<table id="erpShipment" class="display" style="width:100%">
+	<thead>
+		<tr>
+			<th><?php echo __('Zendnota nummer')?></th>
+			<th><?php echo __('Order Nummer')?></th>
+			<th><?php echo __('Bedrag')?></th>
+			<th><?php echo __('Datum')?></th>
+			<th><?php echo __('opvragen')?></th>
+		</tr>
+	</thead>
+	<tbody>
+	
+	<?php  if(!empty($erpShipment['zendnotas'])){
+	foreach($erpShipment['zendnotas'] as $ship){
+		//echo '<pre>'; print_r($ship['zendnotalijnen']);
+		
+		$download="https://shop.mapeco.be/mijn-mapeco/download-pdf/delivery/".$ship['zendnota_nummer'];?>
+		<tr>
+			<td><a href="#">#<?php echo $ship['zendnota_nummer']; ?></a></td>
+			<td>#<?php echo $ship['zendnotalijnen'][0]['ordernummer']; ?></td>
+			<td>€<?php echo $ship['totaal_incl_BTW']; ?></td>
+			<td><?php $shipDate=$ship['datum_creatie']; echo date("Y-m-d H:i:s",strtotime($shipDate)); ?></td>
+			<td><a href="<?php echo $download?>" class="orderLink"><?php echo __('opvragen')?></a></td>
+		</tr>
+	<?php } }?>
+	</tbody>
+</table>
+<script type="text/javascript">
+require(['jquery', 'jquery/ui','dataTableJs'], function($){ 
+    $(document).ready(function($){
+        $('#erpShipment').DataTable();
+    });
+});
+</script>
+

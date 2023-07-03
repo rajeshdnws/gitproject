@@ -1,0 +1,51 @@
+<style>
+.orderLink{
+	color: blue;
+    text-decoration: underline;
+}
+</style>
+<?php  $erpOrders=$block->getErpOrder(); ?>
+
+
+	<table id="erporders" class="display" style="width:100%">
+		<thead>
+			<tr>
+				<th><?php echo __('Order Nummer')?></th>
+				<th><?php echo __('Bedrag')?></th>
+				<th><?php echo __('Datum')?></th>
+				<th><?php echo __('Status')?></th>
+				<th><?php echo __('opvragen')?></th>
+
+			</tr>
+		</thead>
+		<tbody>
+          <?php if(!empty($erpOrders['orders'])){ foreach($erpOrders['orders'] as $order){
+		$download="https://shop.mapeco.be/mijn-mapeco/download-pdf/order/".$order['ordernummer'];
+			  ?>
+			<tr>
+				<td><?php echo $order['ordernummer']; ?></td>
+				<td>€<?php echo $order['totaal_order_ttc'];;?></td>
+				<td><?php $orderDate=$order['datum_ingave']; echo date("Y-m-d H:i:s",strtotime($orderDate)); ?></td>
+				<td>
+				
+				<?php if($order['orderstatus']==6)
+				{ $st='Geleverd';}
+			    elseif($order['orderstatus']==8)
+				{ $st='Geleverd/Gefactureerd';}
+				else{ $st='BO';}				      
+				
+				echo $st;?>
+				</td>
+							<td><a href="<?php echo $download?>" class="orderLink"><?php echo __('opvragen')?></a></td>
+
+			</tr> 
+		  <?php } }?>
+				</tbody>
+	</table>
+	<script type="text/javascript">
+require(['jquery', 'jquery/ui','dataTableJs'], function($){ 
+    $(document).ready(function($){
+        $('#erporders').DataTable();
+    });
+});
+</script>

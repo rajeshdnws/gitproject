@@ -1,0 +1,39 @@
+<style>
+.orderLink{
+	color: blue;
+    text-decoration: underline;
+}
+</style>
+<?php  $erpInvoices=$block->getErpInvoice(); ?>
+
+<table id="erpInvoices" class="display" style="width:100%">
+	<thead>
+		<tr>
+			<th><?php echo __('Factuur Nummer')?></th>
+			<th><?php echo __('Order Nummer')?></th>
+			<th><?php echo __('Bedrag')?></th>
+			<th><?php echo __('Datum')?></th>
+			<th><?php echo __('opvragen')?></th>
+		</tr>
+	</thead>
+	<tbody> <?php if(!empty($erpInvoices['facturen'])){
+		foreach($erpInvoices['facturen'] as $invoice){
+		$download='/contact';//"https://shop.mapeco.be/mijn-mapeco/download-pdf/invoice/".$invoice['stuknummer'];
+		//echo '<pre>'; print_r($invoice)?>
+		<tr>
+			<td>#<?php echo $invoice['stuknummer']; ?></td>
+			<td><a href="<?php echo time(); ?>">#<?php echo time(); ?></a></td>
+			<td>€<?php echo $invoice['totaal_factuur']; ?></td>
+			<td><?php $invoiceDate=$invoice['factuurdatum']; echo date("Y-m-d H:i:s",strtotime($invoiceDate)); ?></td>
+			<td><a href="<?php echo $download?>" class="orderLink"><?php echo __('opvragen')?></a></td>
+		</tr>
+	<?php }}?>
+	</tbody>
+</table>
+	<script type="text/javascript">
+require(['jquery', 'jquery/ui','dataTableJs'], function($){ 
+    $(document).ready(function($){
+        $('#erpInvoices').DataTable();
+    });
+});
+</script>

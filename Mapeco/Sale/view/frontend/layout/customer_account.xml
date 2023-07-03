@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<body>
+	<referenceBlock name="customer_account_navigation">
+	   <referenceBlock name="customer-account-navigation-downloadable-products-link" remove="true"/>
+ 	   <referenceBlock name="customer-account-navigation-my-credit-cards-link" remove="true"/>
+	 <block class="Magento\Customer\Block\Account\SortLinkInterface" name="mapeco_Customer_erporder">
+                <arguments>
+                    <argument name="path" xsi:type="string">erporder/customer/erporder</argument>
+                    <argument name="label" xsi:type="string">Bestellingen overzicht</argument>
+                    <argument name="sortOrder" xsi:type="number">153</argument>
+                    <argument name="navigation" xsi:type="boolean">true</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Customer\Block\Account\SortLinkInterface" name="mapeco_Customer_erpinvoice">
+                <arguments>
+                    <argument name="path" xsi:type="string">erpinvoice/customer/erpinvoice</argument>
+                    <argument name="label" xsi:type="string">Mijn facturen</argument>
+                    <argument name="sortOrder" xsi:type="number">151</argument>
+                    <argument name="navigation" xsi:type="boolean">true</argument>
+                </arguments>
+            </block>
+			  
+			<block class="Magento\Customer\Block\Account\SortLinkInterface" name="mapeco_Customer_erpshipment">
+                <arguments>
+                    <argument name="path" xsi:type="string">erpshipment/customer/erpshipment</argument>
+                    <argument name="label" xsi:type="string">Mijn verzendnota's</argument>
+                    <argument name="sortOrder" xsi:type="number">150</argument>
+                    <argument name="navigation" xsi:type="boolean">true</argument>
+                </arguments>
+            </block>
+			<block class="Magento\Customer\Block\Account\SortLinkInterface" name="mapeco_Customer_ordrlinet">
+                <arguments>
+                    <argument name="path" xsi:type="string">orderline/customer/orderline</argument>
+                    <argument name="label" xsi:type="string">Status Orderlijnen</argument>
+                    <argument name="sortOrder" xsi:type="number">155</argument>
+                    <argument name="navigation" xsi:type="boolean">true</argument>
+                </arguments>
+            </block>
+			  <block class="Magento\Customer\Block\Account\Dashboard" name="customer.account.link.back" template="Magento_Customer::account/link/back.phtml" cacheable="false"/>
+
+        </referenceBlock>
+	
+	</body>
+</page>
